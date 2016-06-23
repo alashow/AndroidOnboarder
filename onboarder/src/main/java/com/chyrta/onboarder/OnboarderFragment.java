@@ -24,23 +24,27 @@ public class OnboarderFragment extends Fragment {
     private static final String ONBOARDER_PAGE_DESCRIPTION_COLOR = "onborader_page_description_color";
     private static final String ONBOARDER_PAGE_DESCRIPTION_TEXT_SIZE = "onboarder_page_description_text_size";
     private static final String ONBOARDER_PAGE_IMAGE_RES_ID = "onboarder_page_iamge_res_id";
+    private static final String ONBOARDER_PAGE_IMAGE_SCALE_TYPE = "onboarder_page_iamge_scale_type";
 
     private String onboarderTitle;
     private String onboarderDescription;
+    private float onboarderTitleTextSize;
+    private float onboarderDescriptionTextSize;
+    private ImageView.ScaleType onboarderImageScaleType;
+
     @StringRes private int onboarderTitleResId;
     @ColorRes private int onboarderTitleColor;
     @StringRes private int onboarderDescriptionResId;
     @ColorRes private int onboarderDescriptionColor;
     @DrawableRes private int onboarderImageResId;
-    private float onboarderTitleTextSize;
-    private float onboarderDescriptionTextSize;
 
     private View onboarderView;
     private ImageView ivOnboarderImage;
     private TextView tvOnboarderTitle;
     private TextView tvOnboarderDescription;
 
-    public OnboarderFragment() {}
+    public OnboarderFragment() {
+    }
 
     public static OnboarderFragment newInstance(OnboarderPage page) {
         Bundle args = new Bundle();
@@ -53,6 +57,7 @@ public class OnboarderFragment extends Fragment {
         args.putInt(ONBOARDER_PAGE_IMAGE_RES_ID, page.getImageResourceId());
         args.putFloat(ONBOARDER_PAGE_TITLE_TEXT_SIZE, page.getTitleTextSize());
         args.putFloat(ONBOARDER_PAGE_DESCRIPTION_TEXT_SIZE, page.getDescriptionTextSize());
+        args.putSerializable(ONBOARDER_PAGE_IMAGE_SCALE_TYPE, page.getScaleType());
         OnboarderFragment fragment = new OnboarderFragment();
         fragment.setArguments(args);
         return fragment;
@@ -77,11 +82,14 @@ public class OnboarderFragment extends Fragment {
         onboarderDescriptionColor = bundle.getInt(ONBOARDER_PAGE_DESCRIPTION_COLOR, 0);
         onboarderDescriptionTextSize = bundle.getFloat(ONBOARDER_PAGE_DESCRIPTION_TEXT_SIZE, 0f);
         onboarderImageResId = bundle.getInt(ONBOARDER_PAGE_IMAGE_RES_ID, 0);
+        onboarderImageScaleType = (ImageView.ScaleType) bundle.getSerializable(ONBOARDER_PAGE_IMAGE_SCALE_TYPE);
 
         onboarderView = inflater.inflate(R.layout.fragment_onboarder, container, false);
         ivOnboarderImage = (ImageView) onboarderView.findViewById(R.id.iv_onboarder_image);
         tvOnboarderTitle = (TextView) onboarderView.findViewById(R.id.tv_onboarder_title);
         tvOnboarderDescription = (TextView) onboarderView.findViewById(R.id.tv_onboarder_description);
+
+        ivOnboarderImage.setScaleType(onboarderImageScaleType);
 
         if (onboarderTitle != null) {
             tvOnboarderTitle.setText(onboarderTitle);
@@ -126,6 +134,4 @@ public class OnboarderFragment extends Fragment {
     public void onDetach() {
         super.onDetach();
     }
-
-
 }

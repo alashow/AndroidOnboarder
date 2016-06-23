@@ -4,6 +4,7 @@ import android.graphics.drawable.Drawable;
 import android.support.annotation.ColorRes;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.StringRes;
+import android.widget.ImageView;
 
 public class OnboarderPage {
 
@@ -18,6 +19,8 @@ public class OnboarderPage {
     @ColorRes public int backgroundColor;
     public float titleTextSize;
     public float descriptionTextSize;
+
+    public ImageView.ScaleType scaleType = ImageView.ScaleType.CENTER_CROP;
 
     public OnboarderPage(String title, String description) {
         this.title = title;
@@ -123,4 +126,12 @@ public class OnboarderPage {
         this.descriptionTextSize = descriptionTextSize;
     }
 
+    public ImageView.ScaleType getScaleType() {
+        return scaleType;
+    }
+
+    public OnboarderPage setScaleType(ImageView.ScaleType scaleType) {
+        this.scaleType = scaleType;
+        return this;
+    }
 }
