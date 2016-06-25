@@ -15,9 +15,9 @@ public class IntroActivity extends OnboarderActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        OnboarderPage onboarderPage1 = new OnboarderPage("Planet Earth", "Our lovely pale blue dot", R.drawable.planet1);
-        OnboarderPage onboarderPage2 = new OnboarderPage("Venus", "The love goddess", R.drawable.planet2);
-        OnboarderPage onboarderPage3 = new OnboarderPage("Mars", "Say hi to Curiosity!", R.drawable.planet3);
+        OnboarderPage onboarderPage1 = new OnboarderPage("Planet Earth", "Our lovely pale blue dot", new int[]{R.drawable.planet1, R.drawable.planet2});
+        OnboarderPage onboarderPage2 = new OnboarderPage("Venus", "The love goddess", new int[]{R.drawable.planet2, R.drawable.planet3});
+        OnboarderPage onboarderPage3 = new OnboarderPage("Mars", "Say hi to Curiosity!", new int[]{R.drawable.planet3,R.drawable.planet1, R.drawable.planet1});
 
         onboarderPage1.setBackgroundColor(R.color.onboarder_bg_1);
         onboarderPage2.setBackgroundColor(R.color.onboarder_bg_2);
@@ -29,7 +29,7 @@ public class IntroActivity extends OnboarderActivity {
         pages.add(onboarderPage2);
         pages.add(onboarderPage3);
 
-        for (OnboarderPage page : pages) {
+        for(OnboarderPage page : pages) {
             page.setTitleColor(R.color.primary_text);
             page.setDescriptionColor(R.color.secondary_text);
         }
@@ -38,7 +38,6 @@ public class IntroActivity extends OnboarderActivity {
         setFinishButtonTitle("Finish");
 
         setOnboardPagesReady(pages);
-
     }
 
     @Override
@@ -51,5 +50,4 @@ public class IntroActivity extends OnboarderActivity {
     public void onFinishButtonPressed() {
         Toast.makeText(this, "Finish button was pressed", Toast.LENGTH_SHORT).show();
     }
-
 }

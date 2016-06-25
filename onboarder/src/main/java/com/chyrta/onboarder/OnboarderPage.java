@@ -10,10 +10,10 @@ public class OnboarderPage {
 
     public String title;
     public String description;
-    public Drawable imageResource;
+    public Drawable[] imageResources;
     @StringRes public int titleResourceId;
     @StringRes public int descriptionResourceId;
-    @DrawableRes public int imageResourceId;
+    @DrawableRes public int[] imageResourceIds;
     @ColorRes public int titleColor;
     @ColorRes public int descriptionColor;
     @ColorRes public int backgroundColor;
@@ -28,17 +28,17 @@ public class OnboarderPage {
         this.backgroundColor = R.color.black_transparent;
     }
 
-    public OnboarderPage(String title, String description, int imageResourceId) {
+    public OnboarderPage(String title, String description, int[] imageResourceIds) {
         this.title = title;
         this.description = description;
-        this.imageResourceId = imageResourceId;
+        this.imageResourceIds = imageResourceIds;
         this.backgroundColor = R.color.black_transparent;
     }
 
-    public OnboarderPage(String title, String description, Drawable imageResource) {
+    public OnboarderPage(String title, String description, Drawable[] imageResources) {
         this.title = title;
         this.description = description;
-        this.imageResource = imageResource;
+        this.imageResources = imageResources;
         this.backgroundColor = R.color.black_transparent;
     }
 
@@ -48,17 +48,17 @@ public class OnboarderPage {
         this.backgroundColor = R.color.black_transparent;
     }
 
-    public OnboarderPage(int title, int description, int imageResourceId) {
+    public OnboarderPage(int title, int description, int[] imageResourceIds) {
         this.titleResourceId = title;
         this.descriptionResourceId = description;
-        this.imageResourceId = imageResourceId;
+        this.imageResourceIds = imageResourceIds;
         this.backgroundColor = R.color.black_transparent;
     }
 
-    public OnboarderPage(int title, int description, Drawable imageResource) {
+    public OnboarderPage(int title, int description, Drawable[] imageResources) {
         this.titleResourceId = title;
         this.descriptionResourceId = description;
-        this.imageResource = imageResource;
+        this.imageResources = imageResources;
         this.backgroundColor = R.color.black_transparent;
     }
 
@@ -94,12 +94,13 @@ public class OnboarderPage {
         this.descriptionColor = color;
     }
 
-    public void setImageResourceId(int imageResourceId) {
-        this.imageResourceId = imageResourceId;
+    public int[] getImageResourceIds() {
+        return imageResourceIds;
     }
 
-    public int getImageResourceId() {
-        return imageResourceId;
+    public OnboarderPage setImageResourceIds(int[] imageResourceIds) {
+        this.imageResourceIds = imageResourceIds;
+        return this;
     }
 
     public void setBackgroundColor(int backgroundColor) {

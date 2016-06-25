@@ -3,14 +3,15 @@ package com.chyrta.onboarder;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.ColorRes;
-import android.support.annotation.DrawableRes;
 import android.support.annotation.StringRes;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 public class OnboarderFragment extends Fragment {
@@ -36,10 +37,11 @@ public class OnboarderFragment extends Fragment {
     @ColorRes private int onboarderTitleColor;
     @StringRes private int onboarderDescriptionResId;
     @ColorRes private int onboarderDescriptionColor;
-    @DrawableRes private int onboarderImageResId;
+
+    private int[] onboarderImageResIds;
 
     private View onboarderView;
-    private ImageView ivOnboarderImage;
+    private ViewGroup ivOnboarderImages;
     private TextView tvOnboarderTitle;
     private TextView tvOnboarderDescription;
 
@@ -54,7 +56,7 @@ public class OnboarderFragment extends Fragment {
         args.putInt(ONBOARDER_PAGE_DESCRIPTION_RES_ID, page.getDescriptionResourceId());
         args.putInt(ONBOARDER_PAGE_TITLE_COLOR, page.getTitleColor());
         args.putInt(ONBOARDER_PAGE_DESCRIPTION_COLOR, page.getDescriptionColor());
-        args.putInt(ONBOARDER_PAGE_IMAGE_RES_ID, page.getImageResourceId());
+        args.putIntArray(ONBOARDER_PAGE_IMAGE_RES_ID, page.getImageResourceIds());
         args.putFloat(ONBOARDER_PAGE_TITLE_TEXT_SIZE, page.getTitleTextSize());
         args.putFloat(ONBOARDER_PAGE_DESCRIPTION_TEXT_SIZE, page.getDescriptionTextSize());
         args.putSerializable(ONBOARDER_PAGE_IMAGE_SCALE_TYPE, page.getScaleType());
@@ -81,15 +83,14 @@ public class OnboarderFragment extends Fragment {
         onboarderDescriptionResId = bundle.getInt(ONBOARDER_PAGE_DESCRIPTION_RES_ID, 0);
         onboarderDescriptionColor = bundle.getInt(ONBOARDER_PAGE_DESCRIPTION_COLOR, 0);
         onboarderDescriptionTextSize = bundle.getFloat(ONBOARDER_PAGE_DESCRIPTION_TEXT_SIZE, 0f);
-        onboarderImageResId = bundle.getInt(ONBOARDER_PAGE_IMAGE_RES_ID, 0);
+        onboarderImageResIds = bundle.getIntArray(ONBOARDER_PAGE_IMAGE_RES_ID);
         onboarderImageScaleType = (ImageView.ScaleType) bundle.getSerializable(ONBOARDER_PAGE_IMAGE_SCALE_TYPE);
 
         onboarderView = inflater.inflate(R.layout.fragment_onboarder, container, false);
-        ivOnboarderImage = (ImageView) onboarderView.findViewById(R.id.iv_onboarder_image);
+        ivOnboarderImages = (ViewGroup) onboarderView.findViewById(R.id.iv_onboarder_images);
         tvOnboarderTitle = (TextView) onboarderView.findViewById(R.id.tv_onboarder_title);
         tvOnboarderDescription = (TextView) onboarderView.findViewById(R.id.tv_onboarder_description);
 
-        ivOnboarderImage.setScaleType(onboarderImageScaleType);
 
         if (onboarderTitle != null) {
             tvOnboarderTitle.setText(onboarderTitle);
@@ -115,16 +116,27 @@ public class OnboarderFragment extends Fragment {
             tvOnboarderDescription.setTextColor(ContextCompat.getColor(getActivity(), onboarderDescriptionColor));
         }
 
-        if (onboarderImageResId != 0) {
-            ivOnboarderImage.setImageDrawable(ContextCompat.getDrawable(getActivity(), onboarderImageResId));
-        }
-
         if (onboarderTitleTextSize != 0f) {
             tvOnboarderTitle.setTextSize(onboarderTitleTextSize);
         }
 
         if (onboarderDescriptionTextSize != 0f) {
             tvOnboarderDescription.setTextSize(onboarderDescriptionTextSize);
+        }
+
+        if (onboarderImageResIds != null) {
+            for(int onboarderImageResId : onboarderImageResIds) {
+                ImageView imageView = new ImageView(getActivity());
+                LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
+                    ViewGroup.LayoutParams.MATCH_PARENT,
+                    ViewGroup.LayoutParams.WRAP_CONTENT
+                );
+                layoutParams.gravity = Gravity.CENTER;
+                imageView.setLayoutParams(layoutParams);
+                imageView.setAdjustViewBounds(true);
+                imageView.setImageDrawable(ContextCompat.getDrawable(getActivity(), onboarderImageResId));
+                ivOnboarderImages.addView(imageView);
+            }
         }
 
         return onboarderView;
